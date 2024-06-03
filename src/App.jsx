@@ -1,28 +1,19 @@
-import { useState } from "react";
-import Navbar from "./Components/Navbar";
-import Upload from "./Components/Upload";
+import React, { useState, useEffect } from "react";
+import LoadingPage from "./pages/LoadingPage";
+import HomePage from "./pages/HomePage";
 
 function App() {
-  const [isOpen, setOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
-  return (
-    <div >
-      <Navbar open={isOpen} setOpen={setOpen} />
-      <div
-        className={`flex-grow flex flex-col justify-center items-center transition-all duration-300 ${
-          isOpen ? "mt-72" : "mt-28"
-        }`}
-      >
-        <p className="text-2xl text-white font-bold md:text-5xl md:mt-10">
-          Facial recognition system
-        </p>
-        <p className="text-base text-white mt-3 md:mt-5 md:text-2xl md:font-semibold">
-          Max image size after processing: 25 megapixels
-        </p>
-      </div>
-      <Upload/>
-    </div>
-  );
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 10000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  return <div>{isLoading ? <LoadingPage /> : <HomePage />}</div>;
 }
 
 export default App;
