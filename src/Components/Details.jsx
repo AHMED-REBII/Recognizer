@@ -31,7 +31,7 @@ const Details = () => {
           </div>
         </div>
       </div>
-      <div className="flex space-x-11 md:justify-between ">
+      <div className="flex space-x-8 md:justify-between ">
         <IconDetails icon={MdOutlineRadar} text="100% recognized" />
         <IconDetails icon={MdAccessTimeFilled} text="Time : 1.2 second" />
         <IconDetails icon={FaDownload} text="Download as PDF JPEG" />
