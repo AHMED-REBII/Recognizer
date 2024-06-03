@@ -9,6 +9,16 @@ import Loader from "./Loader";
 
 const Upload = () => {
   const [selected, setSelected] = useState("");
+
+  const [view, setView] = useState("initial");
+
+  const handleCompareClick = () => {
+    setView("loading");
+    setTimeout(() => {
+      setView("details");
+    }, 6000);
+  };
+
   const handleSelection = (option) => {
     setSelected(option);
   };
@@ -69,10 +79,15 @@ const Upload = () => {
           </button>
         </div>
       </div>
-      <button className="mt-5 md:mt-7 px-8 py-4 bg-[#F57025] text-white rounded-full hover:bg-[#FFCB60] transition-colors text-xl">
+
+      <button
+        className="mt-5 md:mt-7 px-8 py-4 bg-[#F57025] text-white rounded-full hover:bg-[#FFCB60] transition-colors text-xl"
+        onClick={handleCompareClick}
+      >
         Compare
       </button>
-      <Loader/>
+      {view === "loading" && <Loader />}
+      {view === "details" && <Details />}
     </div>
   );
 };
