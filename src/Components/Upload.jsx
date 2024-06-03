@@ -5,6 +5,7 @@ import {
   IoDocumentAttachOutline,
 } from "react-icons/io5";
 import Details from "./Details";
+import Loader from "./Loader";
 
 const Upload = () => {
   const [selected, setSelected] = useState("");
@@ -71,7 +72,7 @@ const Upload = () => {
       <button className="mt-5 md:mt-7 px-8 py-4 bg-[#F57025] text-white rounded-full hover:bg-[#FFCB60] transition-colors text-xl">
         Compare
       </button>
-      <Details />
+      <Loader/>
     </div>
   );
 };
