@@ -10,7 +10,7 @@ const Navbar = ({ open, setOpen }) => {
   ];
 
   return (
-    <div className=" w-full fixed top-0 left-0 ">
+    <div className=" w-full fixed top-0 left-0 bg-[#062b5a]">
       <div className="md:flex items-center justify-between py-4 md:px-10 px-7 ">
         <div className="font-bold text-3xl cursor-pointer flex items-center  text-white pt-2 ">
           <span className="w-16 h-16 mr-2 pt-2">
