@@ -23,7 +23,7 @@ const Upload = () => {
       .withFaceLandmarks()
       .withFaceExpressions();
 
-    canvasRef.current.innerHtml = faceapi.createCanvasFromMedia(imgRef.current);
+    canvasRef.current.innerHTML = faceapi.createCanvasFromMedia(imgRef.current);
     faceapi.matchDimensions(canvasRef.current, {
       width: imgRef.current.width,
       height: imgRef.current.height,
@@ -35,21 +35,24 @@ const Upload = () => {
     });
     faceapi.draw.drawDetections(canvasRef.current, resized);
     faceapi.draw.drawFaceLandmarks(canvasRef.current, resized);
+    faceapi.draw.drawFaceExpressions(canvasRef.current, resized);
   };
 
   useEffect(() => {
-    const loadModels = () => {
-      Promise.all([
+    const loadModels = async () => {
+      await Promise.all([
         faceapi.nets.tinyFaceDetector.loadFromUri("/models"),
         faceapi.nets.faceLandmark68Net.loadFromUri("/models"),
         faceapi.nets.faceRecognitionNet.loadFromUri("/models"),
-      ])
-        .then(handleImage)
-        .catch((e) => console.log(e));
+        faceapi.nets.faceExpressionNet.loadFromUri("/models"),
+      ]);
+      handleImage();
     };
 
-    imgRef.current && loadModels();
-  }, []);
+    if (imgRef.current) {
+      loadModels();
+    }
+  }, [files]);
 
   const handleCompareClick = () => {
     setView("loading");
@@ -141,7 +144,7 @@ const Upload = () => {
             </>
           ) : (
             <>
-              <div className="flex flex-wrap  mt-4 md:mt-0">
+              <div className="flex flex-wrap mt-4 md:mt-0">
                 {files.map((file) => (
                   <div
                     key={file.name}
@@ -156,9 +159,8 @@ const Upload = () => {
                     />
                     <canvas
                       ref={canvasRef}
-                      className="w-24 h-24 object-cover absolute  md:w-96 md:h-64     "
+                      className="w-24 h-24  absolute  md:w-96 md:h-64 "
                     />
-                    )
                   </div>
                 ))}
               </div>
