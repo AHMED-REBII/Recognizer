@@ -29,17 +29,17 @@ const Details = () => {
         <div className="flex flex-row justify-around  md:space-x-32 text-white text-lg font-bold">
           <div className="flex flex-col ">
             <span>Full Name</span>
-            <span className="font-normal mt-2 md:mt-7">Maryem</span>
+            <span className="font-normal mt-2 md:mt-7">Ahmed Rebii</span>
           </div>
           <div className="flex flex-col">
             <span>Id Number</span>
-            <span className="font-normal mt-2 md:mt-7">128 273 43</span>
+            <span className="font-normal mt-2 md:mt-7">146 *** **</span>
           </div>
         </div>
         <div className="flex flex-row justify-around md:space-x-32 text-white text-lg font-bold mt-3 md:mt-0 ">
           <div className="flex flex-col ">
             <span>Birthday</span>
-            <span className="font-normal mt-2 md:mt-7">14 Janv 2002</span>
+            <span className="font-normal mt-2 md:mt-7">16 Fev 2001</span>
           </div>
           <div className="flex flex-col ">
             <span>Address</span>

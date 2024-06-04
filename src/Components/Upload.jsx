@@ -35,7 +35,6 @@ const Upload = () => {
     });
     faceapi.draw.drawDetections(canvasRef.current, resized);
     faceapi.draw.drawFaceLandmarks(canvasRef.current, resized);
-    faceapi.draw.drawFaceExpressions(canvasRef.current, resized);
   };
 
   useEffect(() => {
