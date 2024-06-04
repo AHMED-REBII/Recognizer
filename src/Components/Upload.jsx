@@ -1,4 +1,5 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useRef, useEffect } from "react";
+import * as faceapi from "face-api.js";
 import { useDropzone } from "react-dropzone";
 import {
   IoCloudUploadOutline,
@@ -12,6 +13,45 @@ const Upload = () => {
   const [selected, setSelected] = useState("");
   const [view, setView] = useState("initial");
   const [files, setFiles] = useState([]);
+
+  const imgRef = useRef();
+  const canvasRef = useRef();
+
+  const handleImage = async () => {
+    const detections = await faceapi
+      .detectAllFaces(imgRef.current, new faceapi.TinyFaceDetectorOptions())
+      .withFaceLandmarks()
+      .withFaceExpressions();
+
+    canvasRef.current.innerHtml = faceapi.createCanvasFromMedia(imgRef.current);
+    faceapi.matchDimensions(canvasRef.current, {
+      width: imgRef.current.width,
+      height: imgRef.current.height,
+    });
+
+    const resized = faceapi.resizeResults(detections, {
+      width: imgRef.current.width,
+      height: imgRef.current.height,
+    });
+    faceapi.draw.drawDetections(canvasRef.current, resized);
+    faceapi.draw.drawFaceExpressions(canvasRef.current, resized);
+    faceapi.draw.drawFaceLandmarks(canvasRef.current, resized);
+  };
+
+  useEffect(() => {
+    const loadModels = () => {
+      Promise.all([
+        faceapi.nets.tinyFaceDetector.loadFromUri("/models"),
+        faceapi.nets.faceLandmark68Net.loadFromUri("/models"),
+        faceapi.nets.faceRecognitionNet.loadFromUri("/models"),
+        faceapi.nets.faceExpressionNet.loadFromUri("/models"),
+      ])
+        .then(handleImage)
+        .catch((e) => console.log(e));
+    };
+
+    imgRef.current && loadModels();
+  }, []);
 
   const handleCompareClick = () => {
     setView("loading");
@@ -94,7 +134,7 @@ const Upload = () => {
             <>
               <IoCloudUploadOutline className="text-white text-5xl mt-2 md:mt-5" />
               <p className="mt-2 text-white text-lg">
-                Drag and drop your image or PDF
+                Drag and drop your image
               </p>
               <p className="text-white text-lg">or</p>
               <button className="mt-2 px-6 py-3 bg-[#2eb1ee] text-white rounded-full hover:bg-blue-400 transition-colors text-xl">
@@ -107,12 +147,18 @@ const Upload = () => {
                 {files.map((file) => (
                   <div
                     key={file.name}
-                    className="w-24 h-24 m-2 flex items-center justify-center bg-white rounded-lg md:w-64 md:h-64 "
+                    className="w-24 h-24 m-2 flex items-center justify-center bg-white rounded-lg md:w-96 md:h-64 "
                   >
                     <img
+                      crossOrigin="anonymous"
+                      ref={imgRef}
                       src={file.preview}
                       alt="preview"
-                      className="w-full h-full object-cover rounded-lg"
+                      className="w-full h-full  rounded-lg"
+                    />
+                    <canvas
+                      ref={canvasRef}
+                      className="w-24 h-24 object-cover absolute  md:w-96 md:h-64     "
                     />
                     )
                   </div>

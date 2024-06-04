@@ -1,14 +1,30 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { MdAccessTimeFilled } from "react-icons/md";
 import { FaDownload } from "react-icons/fa";
 import IconDetails from "./IconDetails";
 import { MdOutlineRadar } from "react-icons/md";
-
-
+import { motion } from "framer-motion";
 
 const Details = () => {
+  const [hasAnimated, setHasAnimated] = useState(false);
+  useEffect(() => {
+    if (!hasAnimated) {
+      setHasAnimated(true);
+    }
+  }, [hasAnimated]);
+
   return (
-    <div className="w-full md:w-8/12 mt-4 md:mt-12">
+    <motion.div
+      className="w-full md:w-8/12 mt-4 md:mt-12"
+      initial={{ opacity: 0.5, scale: 0.5 }}
+      transition={{ duration: 2 }}
+      animate={hasAnimated ? "visible" : "hidden"}
+      variants={{
+        visible: { opacity: 1, scale: 1 },
+        hidden: { opacity: 0.5, scale: 0.5 },
+      }}
+      drag
+    >
       <div className="flex flex-col md:flex-row justify-center md:justify-around  md:w-full border-4 border-dashed border-purple-500 rounded-lg md:rounded-2xl bg-[#021D42] p-3 md:p-14">
         <div className="flex flex-row justify-around  md:space-x-32 text-white text-lg font-bold">
           <div className="flex flex-col ">
@@ -36,7 +52,7 @@ const Details = () => {
         <IconDetails icon={MdAccessTimeFilled} text="Time : 1.2 second" />
         <IconDetails icon={FaDownload} text="Download as PDF JPEG" />
       </div>
-    </div>
+    </motion.div>
   );
 };
 
