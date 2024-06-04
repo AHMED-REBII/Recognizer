@@ -143,7 +143,7 @@ const Upload = () => {
             </>
           ) : (
             <>
-              <div className="flex flex-wrap mt-4 md:mt-0">
+              <div className="flex flex-wrap mt-4 md:mt-0 md:py-2">
                 {files.map((file) => (
                   <div
                     key={file.name}
@@ -158,12 +158,12 @@ const Upload = () => {
                     />
                     <canvas
                       ref={canvasRef}
-                      className="w-24 h-24  absolute  md:w-96 md:h-64 "
+                      className="w-24 h-24   absolute  md:w-96 md:h-64 "
                     />
                   </div>
                 ))}
               </div>
-              <button className="mt-2 px-6 py-3 bg-[#2eb1ee] text-white rounded-full hover:bg-blue-400 transition-colors text-xl">
+              <button className="mt-2 md:mt-0  px-6 py-3 bg-[#2eb1ee] text-white rounded-full hover:bg-blue-400 transition-colors text-xl">
                 Browse files
               </button>
             </>
