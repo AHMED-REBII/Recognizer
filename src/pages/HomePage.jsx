@@ -13,10 +13,10 @@ const HomePage = () => {
           isOpen ? "mt-72" : "mt-28"
         }`}
       >
-        <p className="text-2xl text-white font-bold md:text-5xl md:mt-10">
+        <p className="text-2xl text-white font-semibold font-roboto-700 md:text-5xl md:mt-10">
           Facial recognition system
         </p>
-        <p className="text-base text-white mt-3 md:mt-5 md:text-2xl md:font-semibold">
+        <p className="text-base text-white mt-3 md:mt-5 md:text-xl md:font-roboto-500">
           Max image size after processing: 25 megapixels
         </p>
       </div>
